@@ -1,2 +1,2 @@
 RewriteEngine on
-php_value auto_prepend_file "/var/www/html/lank/code/index.php"
+php_value auto_prepend_file "/var/www/html/lank/code/include.php"
