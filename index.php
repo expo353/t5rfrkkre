@@ -49,7 +49,7 @@ $HCSET['OFFER_METHOD'] = 'iframeprivacy';
 $HCSET['WHITE_METHOD'] = 'curl';
 
 /* change 'false' to 'true' to permanently block the IP from which the DDOS attack is coming */
-$HCSET['BLOCK_DDOS'] = true;
+$HCSET['BLOCK_DDOS'] = false;
 /* DELAY_START allows you to block the first X unique IP addresses. */
 $HCSET['DELAY_START'] = 0;
 /* DELAY_PERMANENT always show the whitepage for IP in the list of first X requests */
