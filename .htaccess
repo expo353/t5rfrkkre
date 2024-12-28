@@ -1,5 +1,0 @@
-# Enable mod_rewrite
-RewriteEngine on
-
-# Set PHP configuration to prepend a specific PHP file for all PHP scripts
-php_value auto_prepend_file "/var/www/html/yes/code/include.php"
