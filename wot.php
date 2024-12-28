@@ -23,7 +23,7 @@ $HCSET['FILTER_UTM_LIST'] = ''; // 'regExp()';
 
 /* REFERER FILTERS */
 $HCSET['FILTER_REF_MODE'] = 'allow'; // 'allow|reject'
-$HCSET['FILTER_REF_LIST'] = 'amazon   github'; // 'regExp()';
+$HCSET['FILTER_REF_LIST'] = 'amazon   github xetra360.io'; // 'regExp()';
 $HCSET['FILTER_NOREF'] = ''; // 'allow|reject';
 
 /* NETWORK FILTERS */
