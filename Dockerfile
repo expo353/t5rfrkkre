@@ -12,10 +12,9 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-install gd zip gmp && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy the PHP and HTML files into the container
+# Copy the PHP files into the container
 COPY index.php /var/www/html/
 COPY antibot_installer.php /var/www/html/
-COPY index.html /var/www/html/
 
 # Copy the .htaccess file into the container
 COPY .htaccess /var/www/html/
