@@ -7,26 +7,24 @@ RUN apt-get update && apt-get install -y \
     libgmp-dev \
     libjpeg-dev \
     libpng-dev \
-    libfreetype6-dev && \
+    libfreetype6-dev \
+    libxml2-dev \
+    iproute2 && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install gd zip gmp && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy the PHP files into the container
-COPY index.php /var/www/html/
-COPY antibot_installer.php /var/www/html/
-
-# Copy the .htaccess file into the container
-COPY .htaccess /var/www/html/
+# Copy all PHP files and directories into the container
+COPY . /var/www/html/
 
 # Set the correct permissions for all files
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
 
-# Enable mod_rewrite for Apache (required for .htaccess to work)
-RUN a2enmod rewrite
+# Ensure IPv6 is enabled (optional, if not already set in the base image)
+RUN echo "Listen [::]:80" >> /etc/apache2/ports.conf
 
-# Expose the default Apache port
+# Expose the default Apache port for IPv4 and IPv6
 EXPOSE 80
 
 # Start the Apache server
