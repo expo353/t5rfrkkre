@@ -1,2 +1,0 @@
-RewriteEngine on
-php_value auto_prepend_file "/var/www/html/beauty/code/index.php"
