@@ -17,19 +17,8 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install gd zip gmp
 
-# Enable Apache mod_rewrite for .htaccess to work
-RUN a2enmod rewrite
-
-# Configure Apache to allow .htaccess overrides
-RUN echo "<Directory /var/www/html/>" > /etc/apache2/conf-enabled/override.conf && \
-    echo "    AllowOverride All" >> /etc/apache2/conf-enabled/override.conf && \
-    echo "</Directory>" >> /etc/apache2/conf-enabled/override.conf
-
 # Copy all PHP files and directories into the container
 COPY . /var/www/html/
-
-# Copy the .htaccess file to the correct location in the container
-COPY .htaccess /var/www/html/.htaccess
 
 # Set the correct permissions for all files
 RUN chown -R www-data:www-data /var/www/html && \
