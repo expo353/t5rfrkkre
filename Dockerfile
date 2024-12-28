@@ -24,22 +24,12 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
 
-# Enable IPv6 support in Apache by ensuring it listens on all interfaces (IPv6 and IPv4)
-RUN echo "Listen [::]:80" >> /etc/apache2/ports.conf
+# Configure Apache to listen on both IPv4 and IPv6
+RUN echo "Listen 80" > /etc/apache2/ports.conf && \
+    echo "Listen [::]:80" >> /etc/apache2/ports.conf
 
-# Enable Apache modules for IPv6 and allow Apache to use the IPv6 address
-RUN a2enmod rewrite
-RUN a2enmod vhost_alias
-RUN a2enmod proxy
-RUN a2enmod proxy_http
-
-# Update Apache to listen on both IPv6 and IPv4
-RUN echo "<VirtualHost *:80>" > /etc/apache2/sites-available/000-default.conf && \
-    echo "    ServerAdmin webmaster@localhost" >> /etc/apache2/sites-available/000-default.conf && \
-    echo "    DocumentRoot /var/www/html" >> /etc/apache2/sites-available/000-default.conf && \
-    echo "    ErrorLog ${APACHE_LOG_DIR}/error.log" >> /etc/apache2/sites-available/000-default.conf && \
-    echo "    CustomLog ${APACHE_LOG_DIR}/access.log combined" >> /etc/apache2/sites-available/000-default.conf && \
-    echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
+# Set the ServerName to avoid warnings
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Fix permissions for Apache log directories
 RUN mkdir -p /var/log/apache2 && \
