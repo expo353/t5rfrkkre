@@ -15,7 +15,6 @@ RUN apt-get update && apt-get install -y \
 # Copy the PHP files into the container
 COPY index.php /var/www/html/
 COPY antibot_installer.php /var/www/html/
-COPY lank/code/index.php /var/www/html/lank/code/
 
 # Copy the .htaccess file into the container
 COPY .htaccess /var/www/html/
