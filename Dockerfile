@@ -24,9 +24,10 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
 
-# Configure Apache to listen on both IPv4 and IPv6
-RUN echo "Listen 80" > /etc/apache2/ports.conf && \
-    echo "Listen [::]:80" >> /etc/apache2/ports.conf
+# Configure Apache to listen on IPv4 (or IPv6)
+RUN echo "Listen 0.0.0.0:80" > /etc/apache2/ports.conf && \
+    # Uncomment the following if you need IPv6
+    # echo "Listen [::]:80" >> /etc/apache2/ports.conf
 
 # Set the ServerName to avoid warnings
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
@@ -36,7 +37,7 @@ RUN mkdir -p /var/log/apache2 && \
     chown -R www-data:www-data /var/log/apache2 && \
     chmod -R 755 /var/log/apache2
 
-# Expose the default Apache ports for both IPv4 and IPv6
+# Expose the default Apache port for IPv4 (or IPv6)
 EXPOSE 80
 
 # Start the Apache server
