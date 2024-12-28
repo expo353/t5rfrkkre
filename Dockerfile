@@ -16,12 +16,15 @@ RUN apt-get update && apt-get install -y \
 COPY index.php /var/www/html/
 COPY antibot_installer.php /var/www/html/
 
+# Copy the .htaccess file into the container
+COPY .htaccess /var/www/html/
 
 # Set the correct permissions for all files
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
 
-
+# Enable mod_rewrite for Apache (required for .htaccess to work)
+RUN a2enmod rewrite
 
 # Expose the default Apache port
 EXPOSE 80
