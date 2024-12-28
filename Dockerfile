@@ -21,8 +21,14 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 755 /var/www/html
 
-# Ensure IPv6 is enabled (optional, if not already set in the base image)
-RUN echo "Listen [::]:80" >> /etc/apache2/ports.conf
+# Ensure Apache listens on both IPv4 and IPv6
+RUN echo "Listen 80" > /etc/apache2/ports.conf && \
+    echo "Listen [::]:80" >> /etc/apache2/ports.conf
+
+# Fix permissions for Apache log directories
+RUN mkdir -p /var/log/apache2 && \
+    chown -R www-data:www-data /var/log/apache2 && \
+    chmod -R 755 /var/log/apache2
 
 # Expose the default Apache port for IPv4 and IPv6
 EXPOSE 80
