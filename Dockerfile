@@ -1,7 +1,7 @@
 # Use the official PHP image as a base
 FROM php:8.2-apache
 
-# Install required dependencies and libraries
+# Install required dependencies and libraries for building PHP with IPv6
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     libgmp-dev \
@@ -11,11 +11,14 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     iproute2 \
     iputils-ping \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Ensure PHP is compiled with IPv6 support by installing necessary dependencies
+# Install PHP extensions with IPv6 support
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
-    docker-php-ext-install gd zip gmp
+    docker-php-ext-install gd zip gmp && \
+    # Ensure PHP is built with IPv6 support
+    ./configure --enable-ipv6
 
 # Copy all PHP files and directories into the container
 COPY . /var/www/html/
